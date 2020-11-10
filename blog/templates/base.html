@@ -35,9 +35,17 @@
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
   <div class="site-wrap">
+
+    {% include 'includes/navbar.html' %}
+
     {% block content %}
 
     {% endblock content %}
+
+    {% include 'includes/newsletter.html' %}
+
+    {% include 'includes/footer.html' %}
+
   </div>
   <!-- .site-wrap -->
 

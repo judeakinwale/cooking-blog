@@ -1,27 +1,25 @@
 from django.db import models
+from django.shortcuts import redirect, reverse
 
 # Create your models here.
 
 
 class Article(models.Model):
-    author = models.ForeignKey("Author", on_delete=models.CASCADE)
+    author = models.ForeignKey("Author", on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=250)
     body = models.TextField()
-    image = models.ImageField(upload_to="media", height_field="height_field", width_field="width_field", blank=True, null=True)
+    image = models.ImageField(upload_to="image/%y/%m/%d/", height_field="height_field",
+                              width_field="width_field", blank=True)
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
-    slug = models.SlugField(unique=True)    
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True)
+    category = models.ForeignKey("Category", on_delete=models.DO_NOTHING)
+    tag = models.ManyToManyField("Tag", blank=True)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_published = models.BooleanField(default=True)
     is_trending = models.BooleanField(default=False)
     is_editors_pick = models.BooleanField(default=False)
-    
-
-    class Meta:
-        verbose_name = "article"
-        verbose_name_plural = "articles"
 
     def __str__(self):
         return self.title
@@ -29,16 +27,18 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse("article_detail", kwargs={"slug": self.slug})
 
+    def get_read_time(self):
+        """
+        Get the estimated read time of an article
+        """
+        pass
+
 
 class Author(models.Model):
     name = models.CharField(max_length=150)
     summary = models.TextField()
-    # slug = models.SlugField(unique=True)
     date_joined = models.DateTimeField(auto_now=False, auto_now_add=True)
-
-    class Meta:
-        verbose_name = "author"
-        verbose_name_plural = "authors"
+    image = models.ImageField(upload_to="image/%y/%m/%d/", blank=True)
 
     def __str__(self):
         return self.name
@@ -54,7 +54,6 @@ class Category(models.Model):
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     class Meta:
-        verbose_name = "category"
         verbose_name_plural = "categories"
 
     def __str__(self):
@@ -62,3 +61,10 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("category_detail", kwargs={"slug": self.slug})
+
+
+class Tag(models.Model):
+    """
+    Tags that have a many to many field relationship to article
+    """
+    name = models.CharField(max_length=50)
