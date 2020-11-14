@@ -117,10 +117,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'meranda/static'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = BASE_DIR / 'meranda/static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'meranda/meranda/static',
+]
 
 # Media files
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'meranda/media'
 MEDIA_URL = '/media/'
