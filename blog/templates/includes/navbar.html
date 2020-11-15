@@ -14,7 +14,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-lg-6 d-flex">
                 <a href="{% url 'blog:home' %}" class="site-logo">
-                    Meranda
+                    The Art of Cooking
                 </a>
 
                 <a href="#" class="ml-auto d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
@@ -91,6 +91,12 @@
                             <li>
                                 <a href="categories.html" class="nav-link text-left">Sport</a>
                             </li> -->
+                            <li
+                                {% if about in request.path %}
+                                    class="active"
+                                {% endif %}
+                                >
+                            <a href="{% url 'blog:about' %}" class="nav-link text-left">About</a></li> 
                             <li
                                 {% if contact in request.path %}
                                     class="active"

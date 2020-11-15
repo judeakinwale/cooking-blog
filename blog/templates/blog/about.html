@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <p>
-                    <img src="{% static 'images/big_img_1.jpg' %}" alt="Image" class="img-fluid">
+                    <img src="{% static 'images/about.jpg' %}" alt="Image" class="img-fluid">
                 </p>
             </div>
             <div class="col-lg-6 pl-md-5">
@@ -47,115 +47,75 @@
                     </div>
                 </div>
                 <div class="row">
+                    {% if editors_pick_1 %}
                     <div class="col-md-6">
+                        <!-- Most Recent Editors Pick -->
                         <div class="post-entry-1">
-                            <a href="post-single.html"><img src="{% static 'images/img_h_1.jpg' %}" alt="Image" class="img-fluid"></a>
-                            <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi temporibus praesentium
-                                neque, voluptatum quam quibusdam.</p>
+                            <a href="{{editors_pick_1.get_absolute_url}}"><img src="{{editors_pick_1.image.url}}" alt="Image"
+                                    class="img-fluid"></a>
+                            <h2><a href="{{editors_pick_1.get_absolute_url}}">{{editors_pick_1.title}}</a></h2>
+                            <p class="text-truncate">{{editors_pick_1.body}}</p>
                             <div class="post-meta">
-                                <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                                <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                        class="icon-star2"></span></span>
+                                <span class="d-block"><a href="#">{{editors_pick_1.author}}</a> in <a
+                                        href="#">{{editors_pick_1.category}}</a></span>
+                                <span class="date-read">{{editors_pick_1.timestamp|date:"M d"}} <span class="mx-1">&bullet;</span> 3
+                                    min read
+                                    <span class="icon-star2"></span></span>
+                                <!-- <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
+                                                                                            class="icon-star2"></span></span> -->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
+                        {% for article in editors_picks %}
                         <div class="post-entry-2 d-flex bg-light">
-                            <div class="thumbnail" style="background-image: url('{% static 'images/img_v_1.jpg' %}')"></div>
+                            <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div>
                             <div class="contents">
-                                <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
+                                <h2><a href="blog-single.html">{{article.title}}</a></h2>
                                 <div class="post-meta">
-                                    <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                                    <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                            class="icon-star2"></span></span>
+                                    <span class="d-block"><a href="#">{{article.author}}</a> in <a
+                                            href="#">{{article.category}}</a></span>
+                                    <span class="date-read">{{article.timestamp|date:"M d"}} <span class="mx-1">&bullet;</span> 3
+                                        min read
+                                        <span class="icon-star2"></span></span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="post-entry-2 d-flex">
-                            <div class="thumbnail" style="background-image: url('{% static 'images/img_v_2.jpg' %}')"></div>
-                            <div class="contents">
-                                <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
-                                <div class="post-meta">
-                                    <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                                    <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                            class="icon-star2"></span></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="post-entry-2 d-flex">
-                            <div class="thumbnail" style="background-image: url('{% static 'images/img_v_3.jpg' %}')"></div>
-                            <div class="contents">
-                                <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
-                                <div class="post-meta">
-                                    <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                                    <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                            class="icon-star2"></span></span>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
+                    {% else %}
+                    <h2>There are no Editor's picks yet</h2>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="section-title">
                     <h2>Trending</h2>
                 </div>
-
+                {% if trending_articles %}
+            
+                {% for article in trending_articles %}
                 <div class="trend-entry d-flex">
-                    <div class="number align-self-start">01</div>
+                    <div class="number align-self-start">0{{forloop.counter}}</div>
                     <div class="trend-contents">
-                        <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
+                        <h2><a href="{{article.get_absolute_url}}">{{article.title}}</a></h2>
                         <div class="post-meta">
-                            <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                            <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                    class="icon-star2"></span></span>
+                            <span class="d-block"><a href="#">{{article.author}}</a> in <a href="#">{{article.category}}</a></span>
+                            <span class="date-read">{{article.timestamp|date:"M d"}} <span class="mx-1">&bullet;</span> 3 min read
+                                <span class="icon-star2"></span></span>
                         </div>
                     </div>
                 </div>
-
+                {% endfor %}
+                <p><a href="{% url 'blog:filtered_article' 'trending' %}" class="more">See All Trends <span
+                            class="icon-keyboard_arrow_right"></span></a></p>
+                {% else %}
                 <div class="trend-entry d-flex">
-                    <div class="number align-self-start">02</div>
                     <div class="trend-contents">
-                        <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
-                        <div class="post-meta">
-                            <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                            <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                    class="icon-star2"></span></span>
-                        </div>
+                        <h2>There are no trending articles yet</h2>
                     </div>
                 </div>
-
-                <div class="trend-entry d-flex">
-                    <div class="number align-self-start">03</div>
-                    <div class="trend-contents">
-                        <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
-                        <div class="post-meta">
-                            <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                            <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                    class="icon-star2"></span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="trend-entry d-flex">
-                    <div class="number align-self-start">04</div>
-                    <div class="trend-contents">
-                        <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
-                        <div class="post-meta">
-                            <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
-                            <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span
-                                    class="icon-star2"></span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <p>
-                    <a href="#" class="more">See All Trends <span class="icon-keyboard_arrow_right"></span></a>
-                </p>
-
+                {% endif %}
             </div>
         </div>
     </div>

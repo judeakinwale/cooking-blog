@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     {% endfor %}
-                <p><a href="#" class="more">See All Trends <span class="icon-keyboard_arrow_right"></span></a></p>
+                <p><a href="{% url 'blog:filtered_article' 'trending' %}" class="more">See All Trends <span class="icon-keyboard_arrow_right"></span></a></p>
                 {% else %}                        
                 <div class="trend-entry d-flex">
                     <div class="trend-contents">
@@ -319,7 +319,7 @@
                         </div>
                     {% endfor %}
 
-                    <p><a href="#" class="more">See All Popular <span class="icon-keyboard_arrow_right"></span></a></p>
+                    <p><a href="{% url 'blog:filtered_article' 'popular' %}" class="more">See All Popular <span class="icon-keyboard_arrow_right"></span></a></p>
                 {% else %}
                     <div class="trend-entry d-flex">
                         <div class="trend-contents">

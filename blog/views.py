@@ -243,3 +243,64 @@ class ContactUsView(View):
 #     else:
 #         form = ContactUsForm()
 #     return render(request, 'name.html', {'form': form})
+
+class FilteredArticleListView(TemplateView):
+    template_name = "blog/filtered_article_list.html"
+
+    def get_context_data(self, **kwargs):
+        print(kwargs)
+        if "popular" in kwargs['filter']:
+            query = "Popular"
+            queryset = Article.objects.order_by("-view_count")
+            side_title = "Trending"
+            side_articles = Article.objects.order_by("-timestamp").filter(is_trending=True)
+        elif "trending" in kwargs['filter']:
+            query = "Trending"
+            queryset = Article.objects.order_by("-timestamp").filter(is_trending=True)
+            side_title = "Popular"
+            side_articles = Article.objects.order_by("-view_count")
+        else:
+            no_queryset = "There are no articles at this time. Please check back later"
+            side_title = "Popular"
+            side_articles = Article.objects.order_by("-view_count")
+
+        if queryset:
+            paginator = Paginator(queryset, 6)
+            page_number = self.request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+
+        cat_query = Category.objects.all()
+        print(queryset)
+
+        context = super().get_context_data(**kwargs)
+        try:
+            context["query"] = query
+            context["page_obj"] = page_obj
+        except:
+            context["no_filtered_articles"] = no_queryset
+
+        context["side_articles"] = side_articles[:4]
+        context["side_title"] = side_title
+        context["categories"] = cat_query
+
+        return context
+    
+
+
+class AboutTemplateView(TemplateView):
+    template_name="blog/about.html"
+
+    def get_context_data(self, **kwargs):
+        queryset = Article.objects.order_by("-timestamp")
+        queryset_editors_pick = queryset.filter(is_editors_pick=True)
+        queryset_is_trending = queryset.filter(is_trending=True)
+        cat_query = Category.objects.all()
+
+        context = super().get_context_data(**kwargs)
+        context["editors_pick_1"] = queryset_editors_pick[0]
+        context["editors_picks"] = queryset_editors_pick[1:4]
+        context["trending_articles"] = queryset_is_trending[:4]
+        context["categories"] = cat_query
+        
+        return context
+    
