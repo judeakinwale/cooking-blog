@@ -1,37 +1,52 @@
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, View
 from .forms import ContactUsForm
-from .models import Article, Category
+from .models import Article, Category, Contact
 
 # Create your views here.
 
 
 class SearchListView(ListView):
     paginate_by = 15
-    template_name = "blog/article_list.html"
+    template_name = "blog/search_list.html"
 
     def get_queryset(self):
         query = self.request.GET.get('q')
         try:
-            object_list = Article.objects.filter(Q(title__icontains=query))
-            return object_list
+            category_list_initial = Category.objects.filter(name__icontains=query)[0]
         except:
-            null_search = "We can't find that article"
-            return null_search
-        
-
-def search(request):
-
-    pass
-        
+            category_list_initial = 0
+        object_list = Article.objects.filter(Q(title__icontains=query) | Q(category=category_list_initial))
+        return object_list
 
     def get_context_data(self, **kwargs):
+        query = self.request.GET.get('q')
+        queryset = Article.objects.order_by("-timestamp")
+        queryset_popular = Article.objects.order_by("-view_count")
+        cat_query = Category.objects.all()
+        
         context = super().get_context_data(**kwargs)
-        context["query"] = self.request.GET.get('q')
+        context["popular_articles"] = queryset_popular[:4]
+        context["categories"] = cat_query
+        context["query"] = query
+        
         return context
+
+        
+
+# def search(request):
+
+#     pass
+        
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["query"] = self.request.GET.get('q')
+#         return context
 
 
 class HomeListView(ListView):
@@ -169,17 +184,47 @@ class CategoryDetailView(TemplateView):
 
 class ContactUsView(View):
 
+    # def get_context_data(self, **kwargs):
+    #     queryset = Article.objects.order_by("-timestamp")
+    #     queryset_popular = Article.objects.order_by("-view_count")
+    #     cat_query = Category.objects.all()
+        
+    #     context = super().get_context_data(**kwargs)
+    #     context["popular_articles"] = queryset_popular[:4]
+    #     context["categories"] = cat_query
+        
+    #     return context
+
     def get(self, *args, **kwargs):
         form = ContactUsForm()
         template_name = "blog/contact.html"
-        context = {"form": form}
+        queryset = Article.objects.order_by("-timestamp")
+        queryset_popular = Article.objects.order_by("-view_count")
+        cat_query = Category.objects.all()
+        context = {
+            "form": form,
+            "popular_articles": queryset_popular[:4],
+            "categories": cat_query
+            }
         return render(self.request, template_name, context)
 
     def post(self, *args, **kwargs):
         form = ContactUsForm(self.request.POST or None)
+        contact = Contact()
         if form.is_valid():
-            form.save()
-            return redirect("blog:index")
+            # print(form.cleaned_data)
+            contact.first_name = form.cleaned_data['first_name']
+            contact.last_name = form.cleaned_data['last_name']
+            contact.email = form.cleaned_data['email']
+            contact.phone = form.cleaned_data['phone']
+            contact.message = form.cleaned_data['message']
+
+            recipents = ['judeakinwale@gmail.com']
+            # name = f"{first_name} {last_name}"
+            # print("name")
+            contact.save()
+            # send_mail(name, message, email, recipents)
+            return redirect("blog:home")
         return redirect("blog:contact")
 
 

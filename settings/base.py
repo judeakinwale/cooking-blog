@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'blog', 
 ]
 
@@ -127,3 +128,5 @@ STATICFILES_DIRS = [
 # Media files
 MEDIA_ROOT = BASE_DIR / 'meranda/media'
 MEDIA_URL = '/media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -90,8 +90,13 @@
                             <li><a href="categories.html" class="nav-link text-left">Design</a></li>
                             <li>
                                 <a href="categories.html" class="nav-link text-left">Sport</a>
-                            </li>
-                            <li><a href="contact.html" class="nav-link text-left">Contact</a></li> -->
+                            </li> -->
+                            <li
+                                {% if contact in request.path %}
+                                    class="active"
+                                {% endif %}
+                                >
+                            <a href="{% url 'blog:contact' %}" class="nav-link text-left">Contact</a></li> 
                         </ul>
                     </nav>
 

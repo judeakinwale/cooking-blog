@@ -56,7 +56,7 @@
                 <div class="pt-5">
                     <p>
                     {% if object.category_2 %}
-                        Categories: <a href="#">{{object.category}}</a>, <a href="#">{{object.category_2}} </a>
+                        Categories: <a href="{{object.category.get_absolute_url}}">{{object.category}}</a>, <a href="#">{{object.category_2}} </a>
                     {% else %}
                         Category: <a href="#">{{object.category}} </a> 
                     {% endif %}

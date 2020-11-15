@@ -75,3 +75,15 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
     
+
+class Contact(models.Model):
+    first_name = models.CharField(max_length=150, null=True)
+    last_name = models.CharField(max_length=150, null=True)
+    email = models.CharField(max_length=150)
+    phone = models.CharField(max_length=150, null=True)
+    message = models.TextField()
+    
+    def __str__(self):
+        identity = f"{self.first_name} {self.last_name} : {self.email}"
+        return identity
+    
