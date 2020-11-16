@@ -1,8 +1,9 @@
 # cooking-blog
 a cooking blog
 <br>
+<br>
 <p>there is no database attached</p>
-run
+<p>run</p>
 > python manage.py migrate
 <br>
 <h4>requirements:</h4>
