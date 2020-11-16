@@ -1,11 +1,11 @@
 # cooking-blog
 a cooking blog
-
-there is no database attached/n
-run /n
+<br>
+<p>there is no database attached</p>
+<p>run</p>
 > python manage.py migrate
-
-requirements:/n
-  django 3.8 +/n
-  django_crispy_forms
+<br>
+<h6>requirements:</h6>
+  <p>django 3.8 +</p>
+  <p>django_crispy_forms</p>
   
