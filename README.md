@@ -1,10 +1,11 @@
 # cooking-blog
 a cooking blog
 
-there is no database attached
-run >python manage.py migrate
+there is no database attached/n
+run /n
+> python manage.py migrate
 
-requirements:
-  django 3.8 +
+requirements:/n
+  django 3.8 +/n
   django_crispy_forms
   
