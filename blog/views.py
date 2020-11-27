@@ -117,7 +117,10 @@ class ArticleDetailView(DetailView):
         queryset = Article.objects.order_by("-timestamp")
         queryset_popular = Article.objects.order_by("-view_count")
         cat_query = Category.objects.all()
-        
+        current = queryset.filter(title=kwargs['object'])[0]
+        if current:
+            current.view_count += 1
+            current.save()
         context = super().get_context_data(**kwargs)
         context["popular_articles"] = queryset_popular[:4]
         context["categories"] = cat_query
