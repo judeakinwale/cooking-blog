@@ -38,7 +38,7 @@
                         <div class="post-entry-2 d-flex bg-light">
                             <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div>
                             <div class="contents">
-                                <h2><a href="blog-single.html">{{article.title}}</a></h2>
+                                <h2><a href="{{article.get_absolute_url}}">{{article.title}}</a></h2>
                                 <div class="post-meta">
                                     <span class="d-block"><a href="#">{{article.author}}</a> in <a href="#">{{article.category}}</a></span>
                                     <span class="date-read">{{article.timestamp|date:"M d"}} <span class="mx-1">&bullet;</span> 3 min read
@@ -90,7 +90,7 @@
     <div class="py-0">
         <div class="container">
             <div class="half-post-entry d-block d-lg-flex bg-light">
-                <div class="img-bg" style="background-image: url('images/big_img_1.jpg')"></div>
+                <div class="img-bg" style="background-image: url('../../../../.{{featured_editors_pick_3.image.url}}')"></div>
                 <div class="contents">
                     <span class="caption">Editor's Pick</span>
                     <h2><a href="{{featured_editors_pick_3.get_absolute_url}}">{{featured_editors_pick_3.title}}</a></h2>
