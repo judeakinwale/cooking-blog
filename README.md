@@ -1,12 +1,15 @@
 # cooking-blog
-a cooking blog
+a cooking blog made using django and a bootstrap
 <br>
 <br>
-<p>there is no database attached</p>
-<p>run</p>
-> python manage.py migrate
+<p>to start the project, install the <a href="#requirements">requirements</a>  and run</p>
+> python manage.py runserver
 <br>
-<h4>requirements:</h4>
-  <p>django 3.8 +</p>
-  <p>django_crispy_forms</p>
+<p>then visit <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></p>
+<br>
+<h4 id="requirements">requirements:</h4>
+  <p><a href="https://www.python.org/downloads/">python 3.8 +</a></p>
+  <p>to install the other requirements, run</p>
+  > pip install -r requirements.txt
+  
   
