@@ -1,1 +1,1 @@
-web: gunicorn base.wsgi --log-file -
+web: gunicorn meranda.wsgi --log-file -
