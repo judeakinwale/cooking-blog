@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 import django_heroku
 from pathlib import Path
 
@@ -21,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$=ekalyg@rg0)me@osid2xekn)m@c0#kms_7&37kz8o7=^+$2_'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://a-cooking-blog.herokuapp.com/', '.localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = ['meranda-blog.herokuapp.com', '.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'blog', 
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,32 @@ MEDIA_URL = '/media/'
 
 # For django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# For sending mail #DataFlair
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'judeakinwale@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')  # 'profjude'
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+
+# For AWS s3 storage
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')  # 'AKIA2NQEUH4WHATJ3JSD'
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')  # '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'
+AWS_STORAGE_BUCKET_NAME = 'myturnupawsbucket'
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+AWS_DEFAULT_ACL = None
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'meranda.storage_backends.MediaStorage'  # <-- here is where we reference it
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
