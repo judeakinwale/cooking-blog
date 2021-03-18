@@ -36,7 +36,8 @@
                     <div class="col-md-6">
                         {% for article in editors_picks %}
                         <div class="post-entry-2 d-flex bg-light">
-                            <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div>
+                            <!-- <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div> -->
+                            <div class="thumbnail" style="background-image: url('{{article.image.url}}')"></div>
                             <div class="contents">
                                 <h2><a href="{{article.get_absolute_url}}">{{article.title}}</a></h2>
                                 <div class="post-meta">
@@ -90,7 +91,8 @@
     <div class="py-0">
         <div class="container">
             <div class="half-post-entry d-block d-lg-flex bg-light">
-                <div class="img-bg" style="background-image: url('../../../../.{{featured_editors_pick_3.image.url}}')"></div>
+                <!-- <div class="img-bg" style="background-image: url('../../../../.{{featured_editors_pick_3.image.url}}')"></div> -->
+                <div class="img-bg" style="background-image: url('{{featured_editors_pick_3.image.url}}')"></div>
                 <div class="contents">
                     <span class="caption">Editor's Pick</span>
                     <h2><a href="{{featured_editors_pick_3.get_absolute_url}}">{{featured_editors_pick_3.title}}</a></h2>
@@ -121,7 +123,8 @@
                     
                     {% for article in featured_category_article_1 %}
                         <div class="post-entry-2 d-flex">
-                            <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div>
+                            <!-- <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div> -->
+                            <div class="thumbnail" style="background-image: url('{{article.image.url}}')"></div>
                             <div class="contents">
                                 <h2><a href="{{article.get_absolute_url}}">{{article.title}}</a></h2>
                                 <p class="mb-3 text-truncate">{{article.body}}</p>
@@ -179,7 +182,8 @@
             
                 {% for article in featured_category_article_2 %}
                 <div class="post-entry-2 d-flex">
-                    <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div>
+                    <!-- <div class="thumbnail" style="background-image: url('../../../../.{{article.image.url}}')"></div> -->
+                    <div class="thumbnail" style="background-image: url('{{article.image.url}}')"></div>
                     <div class="contents">
                         <h2><a href="{{article.get_absolute_url}}">{{article.title}}</a></h2>
                         <p class="mb-3 text-truncate">{{article.body}}</p>
@@ -246,7 +250,8 @@
                     
                     {% for article in recent_articles %}
                         <div class="post-entry-2 d-flex">
-                            <div class="thumbnail order-md-2" style="background-image: url('../../../../.{{article.image.url}}')"></div>
+                            <!-- <div class="thumbnail order-md-2" style="background-image: url('../../../../.{{article.image.url}}')"></div> -->
+                            <div class="thumbnail order-md-2" style="background-image: url('{{article.image.url}}')"></div>
                             <div class="contents order-md-1 pl-0">
                                 <h2><a href="{{article.get_absolute_url}}">{{article.title}}</a></h2>
                                 <p class="mb-3 text-truncate">{{article.body}}</p>
